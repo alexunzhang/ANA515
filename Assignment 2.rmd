@@ -1,0 +1,75 @@
+---
+title: "Assignment 2"
+author: "Alex Zhang"
+date: "11/14/2021"
+output: pdf_document
+---
+
+## Section 1
+
+The dataset contains the hate crimes per 100000 population in different states, as well as other datapoints such as household income, unemployment rate, urban population share, high school graduate share, race and etc. The research question that I try to answer is that what are the major factors that contribute to higher hate crimes. Data file type is CSV. It's delimited and the delimiter is comma. 
+
+
+## Section 2
+
+
+Will use read_csv function to read in the comma delimited data. It's from the Tidyverse package.
+
+```{r echo=TRUE}
+library(tidyverse)
+hc <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/hate-crimes/hate_crimes.csv")
+
+```
+##Section 3
+
+Rename one column variable
+
+```{r echo=TRUE}
+
+renamed <- hc %>% 
+  rename("High_School_Graduate_Share"="share_population_with_high_school_degree")
+
+```
+
+Select only three variables
+
+```{r echo=TRUE}
+
+keep <- hc %>% 
+  select(hate_crimes_per_100k_splc,median_household_income,share_unemployed_seasonal)
+
+```
+
+##Section 4
+
+This dataframe has 
+##`r nrow(hc)` 
+ rows and 
+##`r col(hc)`
+ columns. The names of the columns and a brief description of each are in the table below:
+ 
+```{r echo=TRUE,results='asis'}
+
+library(tidyverse)
+library(knitr)
+readme <- read_delim("https://raw.githubusercontent.com/fivethirtyeight/data/master/hate-crimes/README.md", delim = "|")
+kable(readme[4:15,], caption = "Data Dictionary")
+
+##cannot get the second column to show
+
+```
+ 
+##Section 5
+
+```{r echo=TRUE}
+
+keep2 <- hc %>% 
+  select(gini_index,median_household_income,share_unemployed_seasonal)
+
+stats <- summary(keep2)
+
+print(stats)
+            
+```
+
+
